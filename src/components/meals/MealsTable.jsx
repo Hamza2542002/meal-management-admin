@@ -13,7 +13,6 @@ function MealTable() {
   const [paginationModel] = useAtom(mealPaginationData);
   const [selectedCategory] = useAtom(selectedMealCategoryAtom);
   const [, setPage] = useAtom(setMealPageAtom);
-  console.log(isLoadingMeals);
 
   useEffect(() => {
     const loadMeals = async () => {

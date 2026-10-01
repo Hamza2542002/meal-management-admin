@@ -13,11 +13,12 @@
     "@fontsource/inter": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",
     "axios": "^1.20.0",
+    "firebase": "^12.19.0",
     "jotai": "^3.0.0",
     "lucide-react": "^1.43.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "react-hook-form": "^7.87.0",
+    "react-hook-form": "^7.89.0",
     "react-router-dom": "^7.18.3",
     "tailwindcss": "^4.3.3"
   },

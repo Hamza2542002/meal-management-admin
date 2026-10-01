@@ -6,6 +6,7 @@ import Orders from "../pages/Orders";
 import Signup from "../pages/auth/Signup";
 import Login from "../pages/auth/Login";
 import AdminLayout from "../components/layout/AdminLayout";
+import AddMealPage from "../pages/AddMealPage";
 
 export default function AppRoutes() {
   return (
@@ -19,6 +20,7 @@ export default function AppRoutes() {
         <Route element={<AdminLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/meals" element={<Meals />} />
+          <Route path="/meals/addMeal/:id" element={<AddMealPage />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/orders" element={<Orders />} />
         </Route>

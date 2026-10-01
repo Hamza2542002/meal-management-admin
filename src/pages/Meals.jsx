@@ -1,30 +1,34 @@
 import { Plus } from 'lucide-react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import MealsSection from '../components/meals/MealsSection'
+import PageHeader from '../components/common/PageHeader'
+import { useNavigate } from 'react-router-dom';
+import categoriesService from '../services/categoriesService';
 
 export default function Meals() {
+  useEffect(() => {
+    categoriesService.getAll();
+  }, []);
+  const navigate = useNavigate();
   return (
     <div className="space-y-8 pt-8">
       {/* Header */}
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-4xl text-primary font-bold">
-            Meal Management
-          </h1>
 
-          <p className="mt-2 text-md text-on-surface-variant">
-            Manage your meals, categories, and availability.
-          </p>
-        </div>
-
-        <button
-          type="button"
-          className="inline-flex items-center gap-2 rounded-md bg-primary-container px-4 py-3 text-sm font-semibold text-on-primary transition-colors "
-        >
-          <Plus size={18} />
-          Add New Meal
-        </button>
-      </div>
+      <PageHeader
+        title="Meal Management"
+        description="Manage your meals, categories, and availability."
+        buttons={[
+          {
+            id: "add",
+            text: "Add New Meal",
+            icon: Plus,
+            onClick: () => {
+              navigate('/meals/addMeal/0');
+            },
+            mode: "primary-container"
+          }
+        ]}
+      />
 
       {/* Filters + Table */}
       <section>

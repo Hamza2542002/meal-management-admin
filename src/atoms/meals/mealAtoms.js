@@ -39,5 +39,10 @@ export const setMealCategoryAtom = atom(
   null,
   (get, set, category) => {
     set(selectedMealCategoryAtom, category);
+    set(mealPaginationData, {
+      ...get(mealPaginationData),
+      pageNumber: 1,
+    });
   }
 );
+

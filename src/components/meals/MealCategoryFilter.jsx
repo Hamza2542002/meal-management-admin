@@ -1,24 +1,20 @@
 import { useAtom } from "jotai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { selectedMealCategoryAtom, setMealCategoryAtom } from "../../atoms/meals/mealAtoms";
+import { categoriesAtom } from "../../atoms/meals/categoryAtom";
 
-const categories = [
-  { id: "all", name: "All" },
-  { id: 1, name: "Burgers" },
-  { id: 2, name: "Pizza" },
-  { id: 3, name: "Pasta" },
-  { id: 4, name: "Salads" },
-  { id: 5, name: "Desserts" },
-  { id: 6, name: "Drinks" },
-];
 
 function MealCategoryFilter() {
   const [selectedCategory] = useAtom(selectedMealCategoryAtom);
   const [_, setSelectedCategory] = useAtom(setMealCategoryAtom);
+  const [categories] = useAtom(categoriesAtom);
+  let allCategories = [{ id: "all", name: "All" }, ...categories];
+
+
   return (
     <div className="overflow-x-auto">
       <div className="flex w-fit gap-2 rounded-md border border-outline-variant bg-surface-container-lowest p-1.5">
-        {categories.map((category) => {
+        {allCategories.map((category) => {
           const isActive = selectedCategory.toLowerCase() === category.name.toLowerCase();
           return (
             <button
