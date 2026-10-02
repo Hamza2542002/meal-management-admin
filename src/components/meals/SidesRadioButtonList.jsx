@@ -1,15 +1,20 @@
+import { useAtom } from "jotai";
 import SidesRadioButtonInput from "../common/SidesRadioButtonInput";
+import { sidesAtom } from "../../atoms/meals/sidesAtom";
 
 export default function SidesRadioButtonList() {
+  const [sides] = useAtom(sidesAtom);
   return (
     <div>
       <header className="flex justify-between items-center">
         <p className="uppercase text-on-background font-semibold">Choose A SIDE</p>
       </header>
       <div className="grid grid-cols-12 gap-6 my-4">
-        <SidesRadioButtonInput text="Extra Truffle Oil" cost={2.5} id='radio1' />
-        <SidesRadioButtonInput text="Extra Truffle Oil" cost={2.5} id='radio2' />
-        <SidesRadioButtonInput text="Extra Truffle Oil" cost={2.5} id='radio3' />
+        {
+          sides.map((side, index) => (
+            <SidesRadioButtonInput key={index} text={side.name} cost={side.cost} id={`radio${index}`} />
+          ))
+        }
       </div>
     </div>
   )

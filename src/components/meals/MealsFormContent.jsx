@@ -1,5 +1,5 @@
 import { ArrowUpToLine, BadgeJapaneseYen, CloudUpload, Columns3Cog, DollarSign, FileImage, FileText, Leaf, Star, WavesArrowDown, X } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GeneralCard, GeneralCardBody, GeneralCardHeader } from "../common/GeneralCard";
 import FormRow from "../common/FormRow";
 import Input from "../common/Input";
@@ -10,13 +10,45 @@ import IngredientsCheckList from "./IngredientsCheckList";
 import SidesRadioButtonList from "./SidesRadioButtonList";
 import ToggleInput from "../common/ToggleInput";
 import FormColumn from "../common/FormColumn";
-// import { mealCategories } from "../../data/mealCategories";
 import categoriesService from "../../services/categoriesService";
 import { categoriesAtom } from "../../atoms/meals/categoryAtom";
 import { useAtom } from "jotai";
+import toppingsService from "../../services/toppingService";
+import sidesService from "../../services/sidesService";
+
+function CustomizationOptionsSkeleton() {
+  return (
+    <div className="animate-pulse space-y-6" role="status">
+      <span className="sr-only">Loading toppings and side options...</span>
+      <section aria-hidden="true">
+        <div className="mb-4 h-5 w-36 rounded bg-surface-container" />
+        <div className="grid grid-cols-12 gap-6">
+          {[0, 1, 2, 3].map((item) => (
+            <div key={item} className="col-span-6 flex h-12 items-center gap-3 rounded-md border border-outline-variant p-3">
+              <span className="h-5 w-5 rounded-sm bg-surface-container" />
+              <span className="h-4 w-24 rounded bg-surface-container" />
+            </div>
+          ))}
+        </div>
+      </section>
+      <section aria-hidden="true">
+        <div className="mb-4 h-5 w-28 rounded bg-surface-container" />
+        <div className="space-y-3">
+          {[0, 1].map((item) => (
+            <div key={item} className="flex h-12 items-center gap-3 rounded-md border border-outline-variant p-3">
+              <span className="h-5 w-5 rounded-full bg-surface-container" />
+              <span className="h-4 w-32 rounded bg-surface-container" />
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
 
 export default function MealsFormContent({ register, errors, watch, setValue }) {
   const fileInputRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [mealCategories] = useAtom(categoriesAtom);
   const {
     file,
@@ -29,7 +61,13 @@ export default function MealsFormContent({ register, errors, watch, setValue }) 
     required: "Meal image is required.",
   });
   useEffect(() => {
-    categoriesService.getAll();
+    Promise.all([
+      categoriesService.getAll(),
+      toppingsService.getAll(),
+      sidesService.getAll(),
+    ])
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
   }, []);
   return (
     <div className="flex flex-col gap-4 pb-4">
@@ -89,8 +127,13 @@ export default function MealsFormContent({ register, errors, watch, setValue }) 
           <GeneralCard>
             <GeneralCardHeader title="Customization Engine" headIcon={Columns3Cog} />
             <GeneralCardBody>
-              <IngredientsCheckList register={register} />
-              <SidesRadioButtonList register={register} />
+              {
+                isLoading ? <CustomizationOptionsSkeleton /> :
+                  <>
+                    <IngredientsCheckList register={register} />
+                    <SidesRadioButtonList register={register} />
+                  </>
+              }
             </GeneralCardBody>
           </GeneralCard>
         </div>
