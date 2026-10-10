@@ -67,6 +67,8 @@ const mealsService = {
         isAvilable: mealData.live !== false,
         rating: "0.0",
         reviews: 0,
+        side : mealData.sideOption ? mealData.sideOption : "",
+        toppings: mealData.toppings ?? []
       };
       const productDocument = await addDoc(collection(db, "products"), product);
       const meal = {

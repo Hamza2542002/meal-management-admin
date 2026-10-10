@@ -1,4 +1,5 @@
 import { atom } from "jotai";
+import { toppingsAtom } from "./toppingAtom";
 
 // Meals returned from the API
 export const mealsAtom = atom([]);
@@ -45,4 +46,23 @@ export const setMealCategoryAtom = atom(
     });
   }
 );
+export const mealToppingsAtom = atom([]);
+export const setSelectedToppingsAtom = atom(
+  (get) => get(mealToppingsAtom),
+  (get, set, selectedToppings) => {
+    const { checked, value } = selectedToppings.target;
+    const currentToppings = get(mealToppingsAtom);
 
+    if (checked) {
+      const topping = get(toppingsAtom).find((item) => item.name === value);
+
+      if (topping && !currentToppings.some((item) => item.name === value)) {
+        set(mealToppingsAtom, [...currentToppings, topping]);
+      }
+    } else {
+      set(
+        mealToppingsAtom,
+        currentToppings.filter((item) => item.name !== value)
+      );
+    }
+  });
