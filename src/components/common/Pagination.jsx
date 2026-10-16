@@ -6,6 +6,7 @@ function Pagination({
   totalCount,
   pageSize,
   onPageChange,
+  itemLabel = "meals",
 }) {
   const firstItem = totalCount === 0
     ? 0
@@ -37,7 +38,7 @@ function Pagination({
         <span className="font-semibold text-on-surface">
           {totalCount}
         </span>{" "}
-        meals
+        {itemLabel}
       </p>
 
       {/* Pages */}
