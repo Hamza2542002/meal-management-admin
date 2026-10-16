@@ -1,6 +1,6 @@
 import { DollarSign, Plus } from "lucide-react";
 
-export default function SidesRadioButtonInput({ id, text, cost }) {
+export default function SidesRadioButtonInput({ id, text, cost, register }) {
   return (
     <div className="bg-white rounded-md border border-outline-variant col-span-12">
       <label
@@ -13,10 +13,12 @@ export default function SidesRadioButtonInput({ id, text, cost }) {
         "
       >
         <input
+          {...register}
           type="radio"
           id={id}
           className="peer hidden"
           name="sides"
+          value={text}
         />
 
         <span

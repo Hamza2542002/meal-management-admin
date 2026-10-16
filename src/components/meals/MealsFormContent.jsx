@@ -130,8 +130,8 @@ export default function MealsFormContent({ register, errors, watch, setValue }) 
               {
                 isLoading ? <CustomizationOptionsSkeleton /> :
                   <>
-                    <IngredientsCheckList register={register} />
-                    <SidesRadioButtonList register={register} />
+                    <IngredientsCheckList register={{ ...register("toppings") }} />
+                    <SidesRadioButtonList register={{ ...register("sideOption") }} />
                   </>
               }
             </GeneralCardBody>

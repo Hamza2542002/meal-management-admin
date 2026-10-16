@@ -14,7 +14,7 @@ export default function AddMealPage() {
       price: "",
       description: "",
       toppings: [],
-      selectedSideId: "",
+      sideOption: "",
       tags: [],
       live: true,
       image: null,
@@ -22,7 +22,8 @@ export default function AddMealPage() {
   });
 
   const onSubmit = async (data) => {
-    const meal = await mealsService.create(data);
+    console.log("FORM DATA:", data);
+    // const meal = await mealsService.create(data);
     if (meal) {
       navigate("/meals");
       return;
@@ -51,7 +52,7 @@ export default function AddMealPage() {
             text: "Cancel",
             icon: X,
             onClick: () => navigate("/meals"),
-            mode: "secondary-dark"
+            mode: "secondary"
           },
           {
             id: "add",

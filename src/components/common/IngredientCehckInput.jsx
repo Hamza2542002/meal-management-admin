@@ -1,6 +1,6 @@
 import { DollarSign, Plus } from "lucide-react";
 
-export default function IngredientCheckInput({ text, cost, id }) {
+export default function IngredientCheckInput({ text, cost, id, register, onChange }) {
   return (
     <div className="bg-white rounded-md border border-outline-variant col-span-6">
       <label
@@ -16,6 +16,9 @@ export default function IngredientCheckInput({ text, cost, id }) {
           type="checkbox"
           id={id}
           className="peer hidden"
+          register={register}
+          value={text}
+        // onChange={(e) => onChange(e)}
         />
 
         <span
