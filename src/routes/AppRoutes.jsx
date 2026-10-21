@@ -62,7 +62,7 @@ function AuthBoundary({ requireAuth = false }) {
 
 export default function AppRoutes() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         {/* Authentication */}
         <Route element={<AuthBoundary />}>
