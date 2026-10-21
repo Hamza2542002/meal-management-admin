@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   LogOut,
@@ -6,6 +6,9 @@ import {
   UtensilsCrossed,
   FileSpreadsheet,
 } from "lucide-react";
+import { useState } from "react";
+import { auth } from "../../config/firebase";
+import { signOut } from "firebase/auth";
 
 const navigationItems = [
   {
@@ -31,6 +34,26 @@ const navigationItems = [
 ];
 
 function Sidebar() {
+
+  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const [logoutError, setLogoutError] = useState("");
+
+  async function handleLogout() {
+    setLogoutError("");
+    setIsSigningOut(true);
+    try {
+      await signOut(auth);
+      setIsMenuOpen(false);
+      navigate("/login", { replace: true });
+    } catch {
+      setLogoutError("Couldn't sign out. Please try again.");
+    } finally {
+      setIsSigningOut(false);
+    }
+  }
+
   return (
     <aside className="flex min-h-screen w-64 flex-col bg-primary text-on-primary ">
       {/* Brand */}
@@ -76,6 +99,7 @@ function Sidebar() {
       <div className="border-t border-white/10 p-4">
         <button
           type="button"
+          onClick={handleLogout}
           className="flex w-full items-center gap-3 rounded-md px-4 py-3 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
         >
           <LogOut size={20} strokeWidth={2} />

@@ -1,5 +1,4 @@
-import { Edit, Trash2, MoreVertical } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Pagination from "../common/Pagination";
 import MealRow from "./MealRow";
 import { mealPaginationData, mealsAtom, mealsLoadingAtom, selectedMealCategoryAtom, setMealPageAtom } from "../../atoms/meals/mealAtoms";
@@ -54,10 +53,9 @@ function MealTable() {
 
           <tbody>
             {
-              meals.length === 0 ?
-                isLoadingMeals ? (
-                  <MealTableSkeleton rows={paginationModel.pageSize} />
-                ) : (
+              isLoadingMeals ? (
+                <MealTableSkeleton rows={paginationModel.pageSize} />
+              ) : meals.length === 0 ? (
                   <tr>
                     <td colSpan="5" className="px-4 py-3 text-center text-label text-tertiary">
                       No meals found.
